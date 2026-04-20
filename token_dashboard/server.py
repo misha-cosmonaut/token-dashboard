@@ -60,6 +60,9 @@ def build_handler(db_path: str, projects_dir: str):
         def log_message(self, fmt, *args):
             pass
 
+        def do_HEAD(self):
+            return self.do_GET()
+
         def do_GET(self):
             url = urlparse(self.path)
             qs = parse_qs(url.query or "")

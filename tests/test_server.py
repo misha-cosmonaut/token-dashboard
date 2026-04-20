@@ -63,6 +63,17 @@ class ServerTests(unittest.TestCase):
         self.assertIn("plan", body)
         self.assertIn("pricing", body)
 
+    def test_head_returns_200_not_501(self):
+        req = urllib.request.Request(f"http://127.0.0.1:{self.port}/", method="HEAD")
+        with urllib.request.urlopen(req) as resp:
+            self.assertEqual(resp.status, 200)
+            self.assertEqual(resp.read(), b"")
+
+    def test_head_api_endpoint(self):
+        req = urllib.request.Request(f"http://127.0.0.1:{self.port}/api/overview", method="HEAD")
+        with urllib.request.urlopen(req) as resp:
+            self.assertEqual(resp.status, 200)
+
 
 if __name__ == "__main__":
     unittest.main()
